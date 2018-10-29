@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Angel from './Angel.js'
 
 class App extends Component {
   render() {
@@ -6,18 +7,18 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <div className="angels">
-            <div style={{ background: 'red' }} ></div>
-            <div style={{ background: 'orange' }} ></div>
-            <div style={{ background: 'yellow' }} ></div>
-            <div style={{ background: 'forestgreen' }} ></div>
-            <div style={{ background: 'darkred' }} ></div>
-            <div style={{ background: 'darkorange' }} ></div>
-            <div style={{ background: 'gold' }} ></div>
-            <div style={{ background: 'green' }} ></div>
-            <div style={{ background: 'maroon' }} ></div>
-            <div style={{ background: 'chocolate' }} ></div>
-            <div style={{ background: 'goldenrod' }} ></div>
-            <div style={{ background: 'darkgreen' }} ></div>
+            <Angel background="red" x={0} y={1} w={2} h={1} />
+            {/* <Angel background="orange" />
+            <Angel background="yellow" />
+            <Angel background="forestgreen" />
+            <Angel background="darkred" />
+            <Angel background="darkorange" />
+            <Angel background="gold" />
+            <Angel background="green" />
+            <Angel background="maroon" />
+            <Angel background="chocolate" />
+            <Angel background="goldenrod" />
+            <Angel background="darkgreen" /> */}
           </div>
         </div>
       </div>
