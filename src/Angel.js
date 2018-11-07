@@ -10,10 +10,8 @@ export default class Angel extends Component {
         console.log(this.props.x)
         return (
             <div style={{
-                background: this.props.background,
-                // gridColumn: `${this.props.x} / ${this.props.x + this.props.w}`,
-                // gridRow: `${this.props.y} / ${this.props.y + this.props.h}`,
-                gridArea: `${this.props.y} / ${this.props.x} / ${this.props.y + this.props.h} / ${this.props.x + this.props.w}`
+                background: this.props.background || `url(${this.props.backgroundImage})`,
+                gridArea: `${this.props.y} / ${this.props.x} / ${this.props.y + (this.props.h || 1)} / ${this.props.x + (this.props.w || 1)}`
 
             }}></div>
         )

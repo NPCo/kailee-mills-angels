@@ -7,18 +7,15 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <div className="angels">
-            <Angel background="red" x={2} y={1} w={1} h={2} />
-            {/* <Angel background="orange" />
-            <Angel background="yellow" />
-            <Angel background="forestgreen" />
-            <Angel background="darkred" />
-            <Angel background="darkorange" />
-            <Angel background="gold" />
-            <Angel background="green" />
-            <Angel background="maroon" />
-            <Angel background="chocolate" />
-            <Angel background="goldenrod" />
-            <Angel background="darkgreen" /> */}
+            <Angel background="red" x={1} y={1} />
+            <Angel background="red" x={1} y={2} />
+            <Angel background="red" x={1} y={3} />
+            <Angel background="orange" x={2} y={1} h={2} />
+            <Angel background="green" x={2} y={3} w={2} />
+            <Angel background="yellow" x={3} y={1} />
+            <Angel background="purple" x={3} y={2} w={2} />
+            <Angel background="blue" x={4} y={1} />
+            <Angel background="pink" x={4} y={3} />
           </div>
         </div>
       </div>
