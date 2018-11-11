@@ -6,7 +6,8 @@ export default class Angel extends Component {
 		super(props)
 
 		this.state = {
-			hovered: false
+			hovered: false,
+			zIndex: 0
 		}
 
 		this.expand = this.expand.bind(this)
@@ -15,13 +16,15 @@ export default class Angel extends Component {
 
 	expand() {
 		this.setState({
-			hovered: true
+			hovered: true,
+			zIndex: 1
 		})
 	}
 
 	contract() {
 		this.setState({
-			hovered: false
+			hovered: false,
+			zIndex: 0
 		})
 	}
 
@@ -34,6 +37,8 @@ export default class Angel extends Component {
 				style={{
 					background: this.props.background || `url(${this.props.backgroundImage})`,
 					transform: `scale(${this.state.hovered ? 1.1 : 1.0})`,
+					transition: '1s',
+					zIndex: this.state.zIndex,
 					gridArea: [
 						this.props.y,
 						this.props.x,
