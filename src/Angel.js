@@ -39,7 +39,6 @@ export default class Angel extends Component {
 	}
 
 	render() {
-		console.log(this.props.x)
 		return (
 			<div 
 				onMouseEnter={this.expand}
