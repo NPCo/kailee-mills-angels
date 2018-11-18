@@ -7,13 +7,11 @@ export default class Angel extends Component {
 
 		this.state = {
 			hovered: false,
-			revealed: false,
 			zIndex: 0
 		}
 
 		this.expand = this.expand.bind(this)
 		this.contract = this.contract.bind(this)
-		this.reveal = this.reveal.bind(this)
 	}
 
 	expand() {
@@ -31,23 +29,16 @@ export default class Angel extends Component {
 			})
 	}
 
-	reveal() {
-		this.setState({
-			revealed: true,
-			zIndex: 1
-		})
-	}
-
 	render() {
 		return (
-			<div 
+			<div className="angel-element"
 				onMouseEnter={this.expand}
 				onMouseLeave={this.contract}
-				onClick={this.reveal}
+				onClick={this.props.onSelected}
 				style={{
-					background: this.props.background || `url(${this.props.backgroundImage})`,
+					background: `url(${this.props.thumbnail}) no-repeat 50% 50%`,
+					backgroundColor: this.props.color,
 					transform: `scale(${this.state.hovered ? 1.1 : 1.0})`,
-					transition: '1s',
 					zIndex: this.state.zIndex,
 					position: (this.state.revealed) ? 'relative' : 'static',
 					gridArea: [
