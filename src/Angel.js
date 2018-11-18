@@ -9,13 +9,14 @@ export default class Angel extends Component {
 			hovered: false,
 			zIndex: 0
 		}
+		this.enabled = !!this.props.thumbnail
 
 		this.expand = this.expand.bind(this)
 		this.contract = this.contract.bind(this)
 	}
 
 	expand() {
-		if (this.props.thumbnail)
+		if (this.enabled)
 			this.setState({
 				hovered: true,
 				zIndex: 1
@@ -23,7 +24,7 @@ export default class Angel extends Component {
 	}
 
 	contract() {
-		if (this.props.thumbnail)
+		if (this.enabled)
 			this.setState({
 				hovered: false,
 				zIndex: 0
@@ -35,8 +36,9 @@ export default class Angel extends Component {
 			<div className="angel-element"
 				onMouseEnter={this.expand}
 				onMouseLeave={this.contract}
-				onClick={this.props.thumbnail && this.props.onSelected}
+				onClick={this.enabled && this.props.onSelected}
 				style={{
+					cursor: (this.enabled) ? 'pointer' : 'default',
 					background: `url(${this.props.thumbnail}) no-repeat 50% 50%`,
 					backgroundColor: this.props.color,
 					transform: `scale(${this.state.hovered ? 1.1 : 1.0})`,

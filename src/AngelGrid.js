@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import Angel from './Angel.js'
-import './angel.css'
 
 export default class AngelGrid extends Component {
 

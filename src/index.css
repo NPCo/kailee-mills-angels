@@ -54,6 +54,7 @@ body {
 
 .angel-exit:hover {
   background: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 .angel-bio {
@@ -71,7 +72,7 @@ body {
 }
 
 .angel-element {
-  transition: 1s linear;
+  transition: 0.4s linear;
 }
 
 @keyframes fade_in {
