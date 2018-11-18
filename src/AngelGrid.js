@@ -9,6 +9,12 @@ export default class AngelGrid extends Component {
     selectedIndex: -1
   }
 
+  selectIndex(i) {
+    this.setState({
+      selectedIndex: i
+    })
+  }
+
   render() {
 
     const angel = Object.assign(
@@ -29,28 +35,29 @@ export default class AngelGrid extends Component {
           {
             this.props.angels
               .map((a, i) => 
-              <Angel key={i} onSelected={() => this.setState({selectedIndex: i})} {...a} />)
+              <Angel key={i} onSelected={() => this.selectIndex(i)} {...a} />)
           }
         </div>
       )
       : (
-        <div className="angels" style={{
-          backgroundColor: angel.color,
-          height: `${this.props.rows * (this.props.height + 10) - 10}px`,
-        }}>
-          <div className="angel-expanded">
-            <div className="angel-photo">
-              <img alt={angel.name} src={angel.photo} />
-            </div>
-            <div className="angel-title">
-              <span className="angel-name">{angel.name}</span>
-              <span>{angel.dates}</span>
-            </div>
-            <div className="angel-bio">
-              {angel.bio.map((text, i) => <p key={i}>{text}</p>)}
+          <div className="angels" style={{
+            backgroundColor: angel.color,
+            height: `${this.props.rows * (this.props.height + 10) - 10}px`,
+          }}>
+            <div className="angel-expanded">
+              <div className="angel-photo">
+                <img alt={angel.name} src={angel.photo} />
+              </div>
+              <div className="angel-title">
+                <span className="angel-name">{angel.name}</span>
+                <span className="angel-dates">{angel.dates}</span>
+                <div className="angel-exit" onClick={() => this.selectIndex(-1)}><div className="close icon"></div></div>
+              </div>
+              <div className="angel-bio">
+                {angel.bio.map((text, i) => <p key={i}>{text}</p>)}
+              </div>
             </div>
           </div>
-        </div>
       )
   }
 }

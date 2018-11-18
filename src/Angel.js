@@ -15,14 +15,15 @@ export default class Angel extends Component {
 	}
 
 	expand() {
-		this.setState({
-			hovered: true,
-			zIndex: 1
-		})
+		if (this.props.thumbnail)
+			this.setState({
+				hovered: true,
+				zIndex: 1
+			})
 	}
 
 	contract() {
-		if (!this.state.revealed)
+		if (this.props.thumbnail)
 			this.setState({
 				hovered: false,
 				zIndex: 0
@@ -34,7 +35,7 @@ export default class Angel extends Component {
 			<div className="angel-element"
 				onMouseEnter={this.expand}
 				onMouseLeave={this.contract}
-				onClick={this.props.onSelected}
+				onClick={this.props.thumbnail && this.props.onSelected}
 				style={{
 					background: `url(${this.props.thumbnail}) no-repeat 50% 50%`,
 					backgroundColor: this.props.color,
