@@ -33,7 +33,7 @@ export default class Angel extends Component {
 		if (this.enabled)
 			this.setState({
 				hovered: false,
-				zIndex: (this.state.selected) ? 1 : 0
+				zIndex: 0
 			})
 			
 	}
@@ -45,8 +45,8 @@ export default class Angel extends Component {
 			selected: true
 		})
 
-		this.props.onSelected()
 		this.contract()
+		this.props.onSelected()
 	}
 
 	render() {
@@ -58,7 +58,8 @@ export default class Angel extends Component {
 				marginLeft: this.props.expandMargin.left,
 				marginBottom: this.props.expandMargin.bottom,
 				marginRight: this.props.expandMargin.right,
-				background: this.props.color
+				background: this.props.color,
+				zIndex: 1
 			},
 		}
 		console.log('this.props.transitionState', this.props.transitionState)

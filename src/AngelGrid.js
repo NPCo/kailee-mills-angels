@@ -62,7 +62,7 @@ export default sizeMe()(class AngelGrid extends Component {
               this.angels
                 .filter(a => a.id !== this.state.selectedId)
                 .map((a) => (
-			            <Transition key={`angel-${a.id}`} timeout={1000} unmountOnExit>
+			            <Transition key={`angel-${a.id}`} timeout={{exit: 500}} unmountOnExit>
                     {state => 
                     <Angel transitionState={state}
                     onSelected={() => this.selectId(a.id)}
