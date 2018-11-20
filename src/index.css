@@ -75,6 +75,10 @@ body {
   transition: 0.4s linear;
 }
 
+.angel-element-expand {
+  animation: 3s ease-in fade_in;
+}
+
 @keyframes fade_in {
   from {
     opacity: 0;
