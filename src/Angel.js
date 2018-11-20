@@ -7,7 +7,8 @@ export default class Angel extends Component {
 
 		this.state = {
 			hovered: false,
-			zIndex: 0
+			selected: false,
+			zIndex: 0,
 		}
 		this.enabled = !!this.props.thumbnail
 
@@ -17,12 +18,11 @@ export default class Angel extends Component {
 	}
 
 	componentWillUnmount() {
-		console.log('hello')
 		this.props.trigger()
 	}
 
 	expand() {
-		if (this.enabled)
+		if (this.enabled && !this.state.selected)
 			this.setState({
 				hovered: true,
 				zIndex: 1
@@ -33,21 +33,31 @@ export default class Angel extends Component {
 		if (this.enabled)
 			this.setState({
 				hovered: false,
-				zIndex: 0
+				zIndex: (this.state.selected) ? 1 : 0
 			})
+			
 	}
 
 	select() {
 		if (!this.enabled)
 			return
-		
-		console.log('flag')
+		this.setState({
+			selected: true
+		})
+
 		this.props.onSelected()
+		this.contract()
 	}
 
 	render() {
+
+		console.log(JSON.stringify(this.props.expandMargin, null, 2))
 		const transitionStyles = {
 			exiting: {
+				marginTop: this.props.expandMargin.top,
+				marginLeft: this.props.expandMargin.left,
+				marginBottom: this.props.expandMargin.bottom,
+				marginRight: this.props.expandMargin.right,
 				background: this.props.color
 			},
 		}

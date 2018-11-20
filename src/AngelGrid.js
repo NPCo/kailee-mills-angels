@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import TransitionGroup from 'react-transition-group/TransitionGroup'
 import Transition from 'react-transition-group/Transition'
+import sizeMe from 'react-sizeme'
 import uuid from 'uuid'
 
 import Angel from './Angel.js'
 
 const HEIGHT_GAP = 10
 
-export default class AngelGrid extends Component {
+export default sizeMe()(class AngelGrid extends Component {
 
   state = {
     selectedId: null,
@@ -44,7 +45,8 @@ export default class AngelGrid extends Component {
       { color: 'white', photo: '#', name: 'An error has occured', dates: '', bio: [] },
       this.angels.find(a => a.id === this.state.selectedId)
     )
-
+    const WIDTH_GAP = (this.props.size.width - (this.props.columns * this.props.width)) / (this.props.columns - 1)
+    
     return (!this.state.triggered)
       ? (
         <div className="angels" style={{
@@ -64,6 +66,12 @@ export default class AngelGrid extends Component {
                     {state => 
                     <Angel transitionState={state}
                     onSelected={() => this.selectId(a.id)}
+                    expandMargin={{
+                      top: `${(this.props.height + HEIGHT_GAP) * (1 - a.y)}px`,
+                      left: `${(this.props.width + WIDTH_GAP) * (1 - a.x)}px`,
+                      bottom: `${(this.props.height + HEIGHT_GAP) * (a.y + a.h - 1 - this.props.rows)}px`,
+                      right: `${(this.props.width + WIDTH_GAP) * (a.x + a.w - 1 - this.props.columns)}px`,
+                    }}
                     trigger={() => this.trigger()} {...a} />}
                   </Transition>
                 ))
@@ -92,4 +100,4 @@ export default class AngelGrid extends Component {
           </div>
       )
   }
-}
+})
