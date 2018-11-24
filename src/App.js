@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import AngelGrid from './AngelGrid.js'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 const angels = [
   {
@@ -97,13 +98,18 @@ const angels = [
   }
 ]
 
+const angelGrid = () => <AngelGrid rows={3} columns={4} width={250} height={150} angels={angels}/>
+
 export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="container">
-            <AngelGrid rows={3} columns={4} width={250} height={150} angels={angels}/>
-        </div>
+        <Router>
+          <div className="angel-container">
+              <Route path="/" exact component={angelGrid} />
+              <Route path="/edit" component={() => <h2>Hello there</h2>} />
+          </div>
+        </Router>
       </div>
     )
   }

@@ -6,7 +6,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.container {
+.angel-container {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 1fr 3fr 1fr;
