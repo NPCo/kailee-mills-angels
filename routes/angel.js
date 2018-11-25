@@ -58,7 +58,8 @@ const angelSchema = Joi.array().items(Joi.object().keys({
   dates: Joi.string().max(100),
   color: Joi.string().regex(/#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/),
   thumbnail: Joi.string().regex(/((\w+:\/\/)[-a-zA-Z0-9:@;?&=/%+.*!'(),$_{}^~[\]`#|]+)/),
-  photo: Joi.string().regex(/((\w+:\/\/)[-a-zA-Z0-9:@;?&=/%+.*!'(),$_{}^~[\]`#|]+)/)
+  photo: Joi.string().regex(/((\w+:\/\/)[-a-zA-Z0-9:@;?&=/%+.*!'(),$_{}^~[\]`#|]+)/),
+  bio: Joi.array().max(10).items(Joi.string().max(10000))
 }))
 
 function create(req, res, next, db) {
