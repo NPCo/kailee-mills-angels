@@ -49,18 +49,26 @@ function getOne(req, res, next) {
 }
 
 
-const angelSchema = Joi.object().keys({
-
-})
+const angelSchema = Joi.array().items(Joi.object().keys({
+  x: Joi.number().integer().min(1).max(100),
+  y: Joi.number().integer().min(1).max(100),
+  w: Joi.number().integer().min(1).max(100),
+  h: Joi.number().integer().min(1).max(100),
+  name: Joi.string().max(100),
+  dates: Joi.string().max(100),
+  color: Joi.string().regex(/#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/),
+  thumbnail: Joi.string().regex(/((\w+:\/\/)[-a-zA-Z0-9:@;?&=/%+.*!'(),$_{}^~[\]`#|]+)/),
+  photo: Joi.string().regex(/((\w+:\/\/)[-a-zA-Z0-9:@;?&=/%+.*!'(),$_{}^~[\]`#|]+)/)
+}))
 
 function create(req, res, next, db) {
 
-  const { error } = Joi.validate(req.body.angel, angelSchema)
+  const { error } = Joi.validate(req.body.angels, angelSchema)
 
   return error
     ? next({ status: 400, message: 'Could not create new item.' })
     : db.get('angels')
-      .insert(req.body.angel)
+      .insert(req.body.angels)
       .then(() => res.status(201).json({ message: 'Success', data: req.body }))
       .catch(next)
       .finally(() => db.close())
