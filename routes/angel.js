@@ -3,7 +3,7 @@ const router = module.exports = require('express').Router()
 const Joi = require('joi')
 
 const monk = require('monk')
-const readonlyDB = monk(process.env.DB_CONNECTION)
+const readonlyDB = monk(process.env.DB_READ_CONNECTION)
 const angels = readonlyDB.get('angels')
 
 const credentialSchema = Joi.object().keys({
@@ -13,8 +13,10 @@ const credentialSchema = Joi.object().keys({
 
 const validateThen = f => (req, res, next) => {
 
-  const { error } = Joi.validate(req.body.credentials, credentialSchema)
+  console.log(JSON.stringify(req.body, null, 2))
 
+  const { error } = Joi.validate(req.body.credentials, credentialSchema, { presence: 'required' })
+  
   if (error)
     return next({ status: 401, message: 'Incorrect credentials.' })
 
@@ -29,7 +31,7 @@ router.get('/', getAll)
 router.get('/:id', getOne)
 router.post('/', validateThen(create))
 // router.put('/:id', update)
-router.delte('/', validateThen(removeAll))
+router.delete('/', validateThen(removeAll))
 router.delete('/:id', validateThen(removeOne))
 
 
@@ -48,6 +50,9 @@ function getOne(req, res, next) {
     .catch(next)
 }
 
+// const dbErrorHandler = err => ({ 
+//   message: err.message.startsWith('not authorized') ? 'Unauthorized' : 'Something went wrong'
+// })
 
 const angelSchema = Joi.array().items(Joi.object().keys({
   x: Joi.number().integer().min(1).max(100),
