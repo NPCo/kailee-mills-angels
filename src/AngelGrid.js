@@ -7,28 +7,32 @@ import uuid from 'uuid'
 import Angel from './Angel.js'
 
 const HEIGHT_GAP = 10
+const assignId = a => Object.assign(a, { _id: uuid() })
 
 export default sizeMe()(class AngelGrid extends Component {
 
   state = {
     selectedId: null,
-    triggered: false
+    triggered: false,
+    angels: []
   }
 
   constructor(props) {
     super(props)
 
-    this.angels = this.props.angels
-      .map(a => Object.assign({ id: uuid() }, a))
+    this.props.angels()
+      .then(data => data.map(assignId))
+      .then(data => this.setState({ angels: data }))
+      .catch(err => console.error('Error getting angels -', err))
 
     this.selectId = this.selectId.bind(this)
     this.trigger = this.trigger.bind(this)
   }
 
-  selectId(id) {
-    console.log(id)
+  selectId(_id) {
+    console.log(_id)
     this.setState({
-      selectedId: id,
+      selectedId: _id,
       triggered: false
     })
   }
@@ -42,9 +46,10 @@ export default sizeMe()(class AngelGrid extends Component {
   render() {
 
     const angel = Object.assign(
-      { color: 'white', photo: '#', name: 'An error has occured', dates: '', bio: [] },
-      this.angels.find(a => a.id === this.state.selectedId)
+      { color: 'white', photo: '#', name: '...', dates: '', bio: [] },
+      this.state.angels.find(a => a._id === this.state.selectedId)
     )
+
     const WIDTH_GAP = (this.props.size.width - (this.props.columns * this.props.width)) / (this.props.columns - 1)
     
     return (!this.state.triggered)
@@ -59,13 +64,13 @@ export default sizeMe()(class AngelGrid extends Component {
         }}>
           <TransitionGroup component={null}>
             {
-              this.angels
-                .filter(a => a.id !== this.state.selectedId)
+              this.state.angels
+                .filter(a => a._id !== this.state.selectedId)
                 .map((a) => (
-			            <Transition key={`angel-${a.id}`} timeout={{exit: 500}} unmountOnExit>
+			            <Transition key={`angel-${a._id}`} timeout={{exit: 500}} unmountOnExit>
                     {state => 
                     <Angel transitionState={state}
-                    onSelected={() => this.selectId(a.id)}
+                    onSelected={() => this.selectId(a._id)}
                     expandMargin={{
                       top: `${(this.props.height + HEIGHT_GAP) * (1 - a.y)}px`,
                       left: `${(this.props.width + WIDTH_GAP) * (1 - a.x)}px`,

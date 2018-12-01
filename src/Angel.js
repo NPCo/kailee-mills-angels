@@ -41,6 +41,7 @@ export default class Angel extends Component {
 	select() {
 		if (!this.enabled)
 			return
+			
 		this.setState({
 			selected: true
 		})
@@ -51,7 +52,6 @@ export default class Angel extends Component {
 
 	render() {
 
-		console.log(JSON.stringify(this.props.expandMargin, null, 2))
 		const transitionStyles = {
 			exiting: {
 				marginTop: this.props.expandMargin.top,
@@ -62,7 +62,7 @@ export default class Angel extends Component {
 				zIndex: 1
 			},
 		}
-		console.log('this.props.transitionState', this.props.transitionState)
+		
 		return (
 			<div className="angel-element"
 				onMouseEnter={this.expand}
