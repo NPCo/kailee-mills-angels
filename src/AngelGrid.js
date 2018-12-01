@@ -50,10 +50,13 @@ export default sizeMe()(class AngelGrid extends Component {
       this.state.angels.find(a => a._id === this.state.selectedId)
     )
 
-    const columns = this.props.columns || Math.max(...this.state.angels.map(a => a.w + a.x - 1)) || 4
-    const rows = this.props.rows || Math.max(...this.state.angels.map(a => a.h + a.y - 1)) || 3
-    console.log(columns, rows)
-    const WIDTH_GAP = (this.props.size.width - (columns * this.props.width)) / (columns - 1)
+    const columns = this.props.columns || 
+      Math.max(...this.state.angels.map(a => a.w + a.x - 1)) || 4
+      
+    const rows = this.props.rows ||
+      Math.max(...this.state.angels.map(a => a.h + a.y - 1)) || 3
+
+    const WIDTH_GAP = (this.props.size.width - columns * this.props.width) / (columns - 1)
     
     return (!this.state.triggered)
       ? (
