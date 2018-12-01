@@ -7,7 +7,7 @@ const angels = () => fetch('http://localhost:3000/api/angel')
   .then(res => res.json())
   .then(json => json.data)
 
-const angelGrid = () => <AngelGrid rows={3} columns={4} width={250} height={150} angels={angels} />
+const angelGrid = () => <AngelGrid width={250} height={150} angels={angels} />
 
 export default class App extends Component {
   render() {

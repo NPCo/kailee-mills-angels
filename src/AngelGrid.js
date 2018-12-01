@@ -50,16 +50,19 @@ export default sizeMe()(class AngelGrid extends Component {
       this.state.angels.find(a => a._id === this.state.selectedId)
     )
 
-    const WIDTH_GAP = (this.props.size.width - (this.props.columns * this.props.width)) / (this.props.columns - 1)
+    const columns = this.props.columns || Math.max(...this.state.angels.map(a => a.w + a.x - 1)) || 4
+    const rows = this.props.rows || Math.max(...this.state.angels.map(a => a.h + a.y - 1)) || 3
+    console.log(columns, rows)
+    const WIDTH_GAP = (this.props.size.width - (columns * this.props.width)) / (columns - 1)
     
     return (!this.state.triggered)
       ? (
         <div className="angels" style={{
           display: 'grid',
-          gridTemplateColumns: `repeat(${this.props.columns || 4}, ${this.props.width || 100}px)`,
-          gridTemplateRows: `repeat(${this.props.rows || 3}, ${this.props.height || 100}px)`,
-          columnGap: `calc((100% - ${this.props.columns * this.props.width}px) / ${this.props.columns - 1})`,
-          height: `${this.props.rows * (this.props.height + HEIGHT_GAP) - HEIGHT_GAP}px`,
+          gridTemplateColumns: `repeat(${columns || 4}, ${this.props.width || 100}px)`,
+          gridTemplateRows: `repeat(${rows || 3}, ${this.props.height || 100}px)`,
+          columnGap: `calc((100% - ${columns * this.props.width}px) / ${columns - 1})`,
+          height: `${rows * (this.props.height + HEIGHT_GAP) - HEIGHT_GAP}px`,
           rowGap: `${HEIGHT_GAP}px`
         }}>
           <TransitionGroup component={null}>
@@ -74,8 +77,8 @@ export default sizeMe()(class AngelGrid extends Component {
                     expandMargin={{
                       top: `${(this.props.height + HEIGHT_GAP) * (1 - a.y)}px`,
                       left: `${(this.props.width + WIDTH_GAP) * (1 - a.x)}px`,
-                      bottom: `${(this.props.height + HEIGHT_GAP) * (a.y + a.h - 1 - this.props.rows)}px`,
-                      right: `${(this.props.width + WIDTH_GAP) * (a.x + a.w - 1 - this.props.columns)}px`,
+                      bottom: `${(this.props.height + HEIGHT_GAP) * (a.y + a.h - 1 - rows)}px`,
+                      right: `${(this.props.width + WIDTH_GAP) * (a.x + a.w - 1 - columns)}px`,
                     }}
                     trigger={() => this.trigger()} {...a} />}
                   </Transition>
@@ -87,7 +90,7 @@ export default sizeMe()(class AngelGrid extends Component {
       : (
           <div className="angels" style={{
             backgroundColor: angel.color,
-            height: `${this.props.rows * (this.props.height + 10) - 10}px`,
+            height: `${rows * (this.props.height + 10) - 10}px`,
           }}>
             <div className="angel-expanded">
               <div className="angel-photo">
