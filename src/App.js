@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import AngelGrid from './views/AngelGrid.js'
+import AngelDisplay from './views/AngelDisplay.js'
 import EditableAngelGrid from './views/EditableAngelGrid.js'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
@@ -8,7 +8,7 @@ const angels = () => fetch('http://localhost:3000/api/angel')
   .then(res => res.json())
   .then(json => json.data)
 
-const angelGrid = () => <AngelGrid width={250} height={150} angels={angels} />
+const angelGrid = () => <AngelDisplay width={250} height={150} angels={angels} />
 
 const testAngels = [
   { x: 1, y: 1, w: 1, h: 2, color: '#d7f5e1', name: 'Kailee Mayher', dates: '2001 - 2017',

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AngelGrid from './AngelGrid.js'
+import AngelGrid from './AngelDisplay.js'
 
 export default class EditAngelGrid extends Component {
 
