@@ -4,19 +4,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  margin: 0;
 }
 
-.angel-container {
+.three-by-three {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 1fr 3fr 1fr;
 }
 
-.angels {
+.middle-center {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
 }
-
+/* 
 .angel-expanded {
   width: calc(100% - 40px);
   height: calc(100% - 40px);
@@ -87,10 +88,10 @@ body {
   to {
     opacity: 1;
   }
-}
+} */
 
 /* cssicon.space */
-
+/* 
 .close.icon {
   color: #000;
   position: absolute;
@@ -122,4 +123,4 @@ body {
   background-color: currentColor;
   -webkit-transform: rotate(45deg);
           transform: rotate(45deg);
-}
+} */

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export default class Angel extends Component {
+export default class AngelElement extends Component {
 
 	constructor(props) {
 		super(props)

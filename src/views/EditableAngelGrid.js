@@ -13,10 +13,11 @@ export default class EditAngelGrid extends Component {
 
   render() {
     return (
-      <>
-        <h1>Heck!</h1>
-        <AngelGrid width={250} height={150} angels={this.state.angels} />
-      </>
+      <div className="workspace-layout">
+        <div className="angel-container">
+          <AngelGrid width={250} height={150} angels={this.state.angels} />
+        </div>
+      </div>
     )
   }
 }
