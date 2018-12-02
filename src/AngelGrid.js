@@ -20,10 +20,13 @@ export default sizeMe()(class AngelGrid extends Component {
   constructor(props) {
     super(props)
 
-    this.props.angels()
-      .then(data => data.map(assignId))
-      .then(data => this.setState({ angels: data }))
-      .catch(err => console.error('Error getting angels -', err))
+    if (typeof this.props.angels === 'function')
+      this.props.angels()
+        .then(data => data.map(assignId))
+        .then(data => this.setState({ angels: data }))
+        .catch(err => console.error('Error getting angels -', err))
+    else
+      this.state = Object.assign(this.state, { angels: this.props.angels.map(assignId) })
 
     this.selectId = this.selectId.bind(this)
     this.trigger = this.trigger.bind(this)
