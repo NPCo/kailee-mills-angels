@@ -10,8 +10,9 @@ require('dotenv').config()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan(process.env.NODE_ENV !== 'production' ? 'dev' : 'combined'))
-app.use(cors(process.env.NODE_ENV === 'production' && { origin: true, credentials: true }))
+app.use(cors(process.env.NODE_ENV !== 'production' ? undefined : { origin: true, credentials: true }))
 
+app.use('/edit', express.static('./build'))
 app.use('/', express.static('./build'))
 
 app.use('/api/angel', require('./routes/angel'))

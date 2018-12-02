@@ -14,8 +14,8 @@ export default class App extends Component {
     return (
       <Router>
         <div className="angel-container">
-            <Route path="/" exact component={angelGrid} />
-            <Route path="/edit" component={() => <h2>Hello there!</h2>} />
+            <Route path="/" component={angelGrid} />
+            <Route path="/edit" component={() => <h2>Hello here!</h2>} />
         </div>
       </Router>
     )
