@@ -1,11 +1,8 @@
 import React from 'react'
 
 export default ({ angel, height, exit }) => (
-  <div className="angels" style={{
-    backgroundColor: angel.color,
-    height,
-  }}>
-    <div className="angel-expanded">
+  <div style={{ backgroundColor: angel.color, height }}>
+    <div className="fade-in">
       <div className="angel-photo">
         <img alt={angel.name} src={angel.photo} />
       </div>

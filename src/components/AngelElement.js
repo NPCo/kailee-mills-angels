@@ -64,7 +64,7 @@ export default class AngelElement extends Component {
 		}
 		
 		return (
-			<div className="angel-element"
+			<div className="transition-smooth"
 				onMouseEnter={this.expand}
 				onMouseLeave={this.contract}
 				onClick={this.select}

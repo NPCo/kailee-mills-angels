@@ -70,13 +70,13 @@ body {
 .angel-photo img {
   width: 100%;
   height: 100%;
-}
+}*/
 
-.angel-element {
+.transition-smooth {
   transition: 0.4s linear;
 }
 
-.angel-element-expand {
+.fade-in {
   animation: 3s ease-in fade_in;
 }
 
@@ -88,7 +88,7 @@ body {
   to {
     opacity: 1;
   }
-} */
+}
 
 /* cssicon.space */
 /* 

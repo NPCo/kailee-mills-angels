@@ -8,7 +8,13 @@ const angels = () => fetch('http://localhost:3000/api/angel')
   .then(res => res.json())
   .then(json => json.data)
 
-const angelGrid = () => <AngelDisplay width={250} height={150} angels={angels} />
+const angelGrid = () => (
+  <div className="three-by-three">
+    <div className="middle-center">
+      <AngelDisplay width={250} height={150} angels={angels} />
+    </div>
+  </div>
+)
 
 const testAngels = [
   { x: 1, y: 1, w: 1, h: 2, color: '#d7f5e1', name: 'Kailee Mayher', dates: '2001 - 2017',

@@ -70,7 +70,7 @@ export default sizeMe()(class AngelDisplay extends Component {
     }
 
     return (
-        <div className="angels" style={{
+        <div style={{
           display: 'grid',
           gridTemplateColumns: `repeat(${columns || 4}, ${width || 100}px)`,
           gridTemplateRows: `repeat(${rows || 3}, ${height || 100}px)`,
