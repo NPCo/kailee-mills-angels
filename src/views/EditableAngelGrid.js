@@ -14,9 +14,9 @@ export default class EditAngelGrid extends Component {
   render() {
     return (
       <div className="workspace-layout">
-        <div className="angel-container">
+        {/* <div className="two-by-two"> */}
           <AngelGrid width={250} height={150} angels={this.state.angels} />
-        </div>
+        {/* </div> */}
       </div>
     )
   }
