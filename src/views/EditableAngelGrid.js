@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import AngelGrid from './AngelDisplay.js'
+import AngelListItem from '../components/AngelListItem.js'
 
 export default class EditAngelGrid extends Component {
 
@@ -17,10 +18,12 @@ export default class EditAngelGrid extends Component {
         <div style={{ gridArea: 'demo' }}>
           <AngelGrid width={250} height={150} angels={this.state.angels} />
         </div>
-        <div style={{ background: 'red', gridArea: 'side' }}>
-          
+        <div style={{ background: '#DDD', gridArea: 'side' }}>
+          { this.state.angels.map((a) => <AngelListItem {...a} />) }
         </div>
-        <div style={{ background: 'blue', gridArea: 'edit' }}></div>
+        <div style={{ background: '#999', gridArea: 'edit' }}>
+
+        </div>
       </div>
     )
   }
