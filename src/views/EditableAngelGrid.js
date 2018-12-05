@@ -14,9 +14,13 @@ export default class EditAngelGrid extends Component {
   render() {
     return (
       <div className="workspace-layout">
-        {/* <div className="two-by-two"> */}
+        <div style={{ gridArea: 'demo' }}>
           <AngelGrid width={250} height={150} angels={this.state.angels} />
-        {/* </div> */}
+        </div>
+        <div style={{ background: 'red', gridArea: 'side' }}>
+          
+        </div>
+        <div style={{ background: 'blue', gridArea: 'edit' }}></div>
       </div>
     )
   }

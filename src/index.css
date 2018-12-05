@@ -94,8 +94,14 @@ body {
 
 .workspace-layout {
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto 1fr;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: 5fr 1fr;
+  grid-template-rows: 3fr 1fr;
+  grid-template-areas: 
+    "demo side"
+    "edit side";
 }
 
 /* cssicon.space */
