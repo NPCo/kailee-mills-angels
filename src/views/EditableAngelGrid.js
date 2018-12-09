@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AngelGrid from './AngelDisplay.js'
 import AngelListItem from '../components/AngelListItem.js'
+import AngelEditForm from '../components/AngelEditForm.js'
 
 export default class EditAngelGrid extends Component {
 
@@ -22,21 +23,24 @@ export default class EditAngelGrid extends Component {
   }
 
   render() {
+
+    const { angels, focusId } = this.state
+
     return (
       <div className="workspace-layout">
         <div style={{ gridArea: 'demo' }}>
-          <AngelGrid width={250} height={150} angels={this.state.angels} />
+          <AngelGrid width={250} height={150} angels={angels} />
         </div>
         <div className="angel-list">
           { 
-            this.state.angels.map(a =>
+            angels.map(a =>
               <AngelListItem key={a._id} {...a} onClick={() => this.focus(a._id)} />
             )
           }
         </div>
         { 
-          this.state.focusId
-            ? <div className="edit-angel-form"></div>
+          !!focusId
+            ? <AngelEditForm {...angels.find(a => a._id === focusId)} />
             : <></>
         }
       </div>
