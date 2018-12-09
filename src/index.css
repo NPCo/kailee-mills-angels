@@ -52,12 +52,6 @@ body {
 .angel-exit {
   grid-column: 2 / 3;
   grid-row: 1 / 2;
-  transition: 0.5s;
-}
-
-.angel-exit:hover {
-  background: rgba(0, 0, 0, 0.1);
-  cursor: pointer;
 }
 
 .angel-bio {
@@ -99,9 +93,35 @@ body {
   width: 100%;
   grid-template-columns: 5fr 1fr;
   grid-template-rows: 3fr 1fr;
-  grid-template-areas: 
+  grid-template-areas:
     "demo side"
     "edit side";
+}
+
+.angel-list {
+  background: #DDD;
+  grid-area: side;
+}
+
+.angel-list-item {
+  padding: 20px;
+  box-sizing: border-box;
+  border-top: 1px dashed black;
+  border-bottom: 1px dashed black;
+}
+
+.edit-angel-form {
+  background: #999;
+  grid-area: edit;
+}
+
+.clickable {
+  transition: 0.5s;
+}
+
+.clickable:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  cursor: pointer;
 }
 
 /* cssicon.space */

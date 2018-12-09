@@ -17,7 +17,7 @@ const angelGrid = () => (
 )
 
 const testAngels = [
-  { x: 1, y: 1, w: 1, h: 2, color: '#d7f5e1', name: 'Kailee Mayher', dates: '2001 - 2017',
+  { _id: 'abc', x: 1, y: 1, w: 1, h: 2, color: '#d7f5e1', name: 'Kailee Mayher', dates: '2001 - 2017',
     thumbnail: 'https://static.wixstatic.com/media/82ddba_37d2056d4b214c8bacd52cd05731b06e~mv2.jpg/v1/crop/x_0,y_19,w_320,h_398/fill/w_201,h_246,al_c,q_80,usm_0.66_1.00_0.01/82ddba_37d2056d4b214c8bacd52cd05731b06e~mv2.jpg',
     photo: 'https://static.wixstatic.com/media/82ddba_37d2056d4b214c8bacd52cd05731b06e~mv2.jpg/v1/crop/x_0,y_19,w_320,h_398/fill/w_201,h_246,al_c,q_80,usm_0.66_1.00_0.01/82ddba_37d2056d4b214c8bacd52cd05731b06e~mv2.jpg',
     bio: [
@@ -26,7 +26,7 @@ const testAngels = [
       'In lieu of flowers, contributions may be made to the Kailee Mayher Charitable Fund c/o any Fifth Third Bank. Mass of Christian Burial at St. Joseph Church, 12700 Pearl Rd., Strongsville, Tuesday, June 13, 2017 at 10 a.m. Entombment Holy Cross Mausoleum. Family will receive friends at the church, Monday, June 12 from 3-8 p.m.'
     ]
   },
-  { x: 1, y: 3, w: 1, h: 1, color: '#d7f5e1' }
+  { _id: 'def', x: 1, y: 3, w: 1, h: 1, color: '#d7f5e1' }
 ]
 
 const editInterface = () => <EditableAngelGrid angels={testAngels} />

@@ -8,8 +8,17 @@ export default class EditAngelGrid extends Component {
     super(props)
 
     this.state = {
-      angels: this.props.angels
+      angels: this.props.angels,
+      focusId: undefined
     }
+
+    this.focus = this.focus.bind(this)
+  }
+
+  focus(_id) {
+    this.setState({
+      focusId: _id
+    })
   }
 
   render() {
@@ -18,12 +27,18 @@ export default class EditAngelGrid extends Component {
         <div style={{ gridArea: 'demo' }}>
           <AngelGrid width={250} height={150} angels={this.state.angels} />
         </div>
-        <div style={{ background: '#DDD', gridArea: 'side' }}>
-          { this.state.angels.map((a) => <AngelListItem {...a} />) }
+        <div className="angel-list">
+          { 
+            this.state.angels.map(a =>
+              <AngelListItem key={a._id} {...a} onClick={() => this.focus(a._id)} />
+            )
+          }
         </div>
-        <div style={{ background: '#999', gridArea: 'edit' }}>
-
-        </div>
+        { 
+          this.state.focusId
+            ? <div className="edit-angel-form"></div>
+            : <></>
+        }
       </div>
     )
   }
