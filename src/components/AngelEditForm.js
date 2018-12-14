@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Form, Text } from 'informed'
 
 export default class AngelEditForm extends Component {
 
@@ -12,10 +13,15 @@ export default class AngelEditForm extends Component {
   render() {
     return (
       <div className="edit-angel-form" style={{ backgroundColor: this.props.color }}>
-        <form>
-          <label for="angel-name">Name:</label>
-          <input type="text" id="angel-name" />
-        </form>
+        <Form 
+          onChange={formState => console.log('edited', formState)}
+          onSubmit={formState => console.log('submitted', formState)}>
+          <label>
+            Name:
+            <Text field="angel-name" />
+          </label>
+          <button type="submit">Submit</button>
+        </Form>
       </div>
     )
   }
