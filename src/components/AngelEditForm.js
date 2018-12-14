@@ -6,17 +6,16 @@ export default class AngelEditForm extends Component {
   constructor(props) {
     super(props)
 
-    console.log('reloaded', props)
-
-    this.state = {
-      ...props.angel
-    }
+    this.state = {}
   }
 
   render() {
     return (
-      <div className="edit-angel-form" style={{ backgroundColor: this.state.color }}>
-        <h1>{this.state.name || 'Blank'}</h1>
+      <div className="edit-angel-form" style={{ backgroundColor: this.props.color }}>
+        <form>
+          <label for="angel-name">Name:</label>
+          <input type="text" id="angel-name" />
+        </form>
       </div>
     )
   }

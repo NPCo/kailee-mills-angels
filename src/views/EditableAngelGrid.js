@@ -40,7 +40,7 @@ export default class EditAngelGrid extends Component {
         </div>
         { 
           !!focusId
-            ? <AngelEditForm angel={angels.find(a => a._id === focusId)} />
+            ? <AngelEditForm {...angels.find(a => a._id === focusId)} />
             : <></>
         }
       </div>
