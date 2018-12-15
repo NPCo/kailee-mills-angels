@@ -26,7 +26,7 @@ const testAngels = [
       'In lieu of flowers, contributions may be made to the Kailee Mayher Charitable Fund c/o any Fifth Third Bank. Mass of Christian Burial at St. Joseph Church, 12700 Pearl Rd., Strongsville, Tuesday, June 13, 2017 at 10 a.m. Entombment Holy Cross Mausoleum. Family will receive friends at the church, Monday, June 12 from 3-8 p.m.'
     ]
   },
-  { _id: 'def', x: 1, y: 3, w: 1, h: 1, color: '#d7f5e1' }
+  { _id: 'def', x: 1, y: 3, w: 1, h: 1, color: '#deeeee' }
 ]
 
 const editInterface = () => <EditableAngelGrid angels={testAngels} />
