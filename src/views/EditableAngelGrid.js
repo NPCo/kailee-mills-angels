@@ -17,12 +17,13 @@ export default class EditAngelGrid extends Component {
 
     this.state = {
       angels: this.props.angels,
-      focusId: undefined
+      focusId: null
     }
 
     this.focus = this.focus.bind(this)
     this.editAngel = this.editAngel.bind(this)
     this.newAngel = this.newAngel.bind(this)
+    this.removeAngel = this.removeAngel.bind(this)
   }
 
   focus(_id) {
@@ -66,12 +67,29 @@ export default class EditAngelGrid extends Component {
     console.log(slots)
 
     const firstOpen = slots.findIndex(occupied => !occupied)
-    const x = (Math.floor(firstOpen / rows) + 1) || columns + 1
-    const y = (firstOpen % rows + 1) || 1
+    const x = firstOpen !== -1 
+      ? (Math.floor(firstOpen / rows) + 1)
+      : (columns > rows)
+      ? 1
+      : columns + 1
+
+    const y = firstOpen !== -1 
+      ? (firstOpen % rows + 1)
+      : (columns > rows)
+      ? rows + 1
+      : 1
+    
 
     this.setState({
       angels: angels.concat({ _id, color, x, y, w: 1, h: 1 }),
       focusId: _id
+    })
+  }
+
+  removeAngel(_id) {
+    this.setState({
+      angels: this.state.angels.filter(a => a._id !== _id),
+      focusId: null
     })
   }
 
@@ -85,18 +103,22 @@ export default class EditAngelGrid extends Component {
             <AngelGrid width={250} height={150} angels={angels} key={uuid()} />
         </div>
         <div className="angel-list">
+          <div className="angel-list-item">
+            <button onClick={() => this.newAngel()}>New Angel</button>
+            <button onClick={() => console.log('save')}>Save Changes</button>
+            <button onClick={() => console.log('publish')}>Publish</button>
+          </div>
           { 
             angels.map(a =>
               <AngelListItem key={a._id} {...a} onClick={() => this.focus(a._id)} />
             )
           }
-          <AngelListItem key={uuid()} name="+" onClick={() => this.newAngel()} />
         </div>
         { 
           !!focusId
             ? <AngelEditForm 
               onValueChange={this.editAngel}
-              onSubmit={formState => console.log('submitted', formState)}
+              removeAngel={() => this.removeAngel(focusId)}
               {...angels.find(a => a._id === focusId)} />
             : <></>
         }

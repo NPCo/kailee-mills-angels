@@ -1,13 +1,12 @@
 import React from 'react'
 import { Form, Text, TextArea } from 'informed'
 
-export default ({ _id, onValueChange, onSubmit, ...angel }) => (
+export default ({ _id, onValueChange, removeAngel, ...angel }) => (
   <div style={{ backgroundColor: angel.color, gridArea: 'edit' }}>
     <Form
       key={`form-${_id}`}
       initialValues={angel}
-      onValueChange={onValueChange}
-      onSubmit={onSubmit}>
+      onValueChange={onValueChange}>
       <div className="edit-angel-form">
         <div className="angel-form-info">
           <label htmlFor="angel-name">Name:</label>
@@ -42,7 +41,7 @@ export default ({ _id, onValueChange, onSubmit, ...angel }) => (
           <label htmlFor="angel-height">Height:</label>
           <Text field="h" id="angel-height" />
 
-          <button type="submit" style={{ gridColumn: '1 / 3' }}>Submit</button>
+          <button onClick={removeAngel} style={{ gridColumn: '1 / 3' }}>Delete</button>
         </div>
       </div>
     </Form>
