@@ -37,7 +37,6 @@ export default sizeMe()(class AngelDisplay extends Component {
   }
 
   selectId(_id) {
-    console.log(_id)
     this.setState({
       selectedId: _id,
       triggered: false
@@ -54,9 +53,7 @@ export default sizeMe()(class AngelDisplay extends Component {
 
     const { angels, selectedId } = this.state
     const { width, height } = this.props
-
-    console.table(angels)
-
+    
     const columns = +(this.props.columns || Math.max(...angels.map(a => +a.w + +a.x - 1)) || 4)
     const rows = +(this.props.rows || Math.max(...angels.map(a => +a.h + +a.y - 1)) || 3)
 

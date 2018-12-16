@@ -55,13 +55,19 @@ export default class EditAngelGrid extends Component {
     const columns = Math.max(...angels.map(a => +a.w + +a.x - 1))
     const rows = Math.max(...angels.map(a => +a.h + +a.y - 1))
     
-    const occupied = Array(columns).fill(Array(rows).fill(false))
-    console.log(occupied)
-    angels.forEach(a => occupied[+a.x - 1][+a.y - 1] = true)
+    const slots = Array(columns * rows).fill(false)
+    
+    angels.forEach(a => {
+      for (let x = a.x - 1; x < a.x + +a.w - 1; x++)
+        for (let y = a.y - 1; y < a.y + +a.h - 1; y++)
+          console.table({x, y}) || (slots[x * rows + y] = true)
+    })
 
-    const xI = occupied.findIndex(row => row.findIndex(occ => !occ) !== -1)
-    const x = (xI === -1) ? columns + 1 : xI + 1
-    const y = (xI === -1) ? 1 : occupied[xI].findIndex(occ => !occ) + 1
+    console.log(slots)
+
+    const firstOpen = slots.findIndex(occupied => !occupied)
+    const x = (Math.floor(firstOpen / rows) + 1) || columns + 1
+    const y = (firstOpen % rows + 1) || 1
 
     this.setState({
       angels: angels.concat({ _id, color, x, y, w: 1, h: 1 }),
