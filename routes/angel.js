@@ -4,7 +4,10 @@ const Joi = require('joi')
 
 const monk = require('monk')
 const readonlyDB = monk(process.env.DB_READ_CONNECTION)
-const angels = readonlyDB.get('angels')
+const getCollection = req =>
+  (!!req.query.isDraft && req.query.isDraft === 'true')
+    ? process.env.DRAFT_COLLECTION
+    : process.env.COLLECTION
 
 const credentialSchema = Joi.object().keys({
   username: Joi.string().alphanum().min(8).max(32).required(),
@@ -36,13 +39,15 @@ router.delete('/:id', validateThen(removeOne))
 
 
 function getAll(req, res, next) {
-  angels.find({})
+  readonlyDB.get(getCollection(req))
+    .find({})
     .then(items => res.status(200).send({ data: items }))
     .catch(next)
 }
 
 function getOne(req, res, next) {
-  angels.findOne({ id: req.params.id })
+  readonlyDB.get(getCollection(req))
+    .findOne({ id: req.params.id })
     .then(item => {
       if (!item) return res.status(404).send({ message: 'Item not found.' })
       res.status(200).send({ data: item })
@@ -73,7 +78,7 @@ function create(req, res, next, db) {
 
   return error
     ? next({ status: 400, message: 'Could not create new item.' })
-    : db.get('angels')
+    : db.get(getCollection(req))
       .insert(req.body.angels)
       .then(() => res.status(201).json({ message: 'Success', data: req.body }))
       .catch(next)
@@ -88,7 +93,7 @@ function create(req, res, next, db) {
 // }
 
 function removeAll(req, res, next, db) {
-  db.get('angels')
+  db.get(getCollection(req))
     .remove({})
     .then(() => res.status(200).json({ message: 'Removed All' }))
     .catch(next)
@@ -96,7 +101,7 @@ function removeAll(req, res, next, db) {
 }
 
 function removeOne(req, res, next, db) {
-  db.get('angels')
+  db.get(getCollection(req))
     .findOneAndDelete({ _id: req.params.id })
     .then(() => res.status(200).json({ message: 'Removed' }))
     .catch(next)

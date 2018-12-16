@@ -16,9 +16,18 @@ export default class EditAngelGrid extends Component {
     super(props)
 
     this.state = {
-      angels: this.props.angels,
+      angels: [],
       focusId: null
     }
+
+    const { angels } = this.props
+
+    if (typeof angels === 'function')
+      angels()
+        .then(data => this.setState({ angels: data }))
+        .catch(err => console.error('Error getting angels -', err))
+    else
+      this.state = Object.assign(this.state, { angels })
 
     this.focus = this.focus.bind(this)
     this.editAngel = this.editAngel.bind(this)

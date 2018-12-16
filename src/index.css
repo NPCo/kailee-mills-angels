@@ -100,7 +100,7 @@ body {
 
 .edit-live-demo {
   grid-area: demo;
-  overflow-y: scroll;
+  overflow: auto;
 }
 
 .angel-list {
