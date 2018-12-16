@@ -9,7 +9,7 @@ import AngelExpanded from '../components/AngelExpanded.js'
 
 const HEIGHT_GAP = 10
 const ANGEL_TEMPLATE = { color: 'white', photo: '#', name: '...', dates: '', bio: [] }
-const assignId = a => Object.assign(a, { _id: uuid() })
+const assignId = a => a.hasOwnProperty('_id') ? a : Object.assign(a, { _id: uuid() })
 
 export default sizeMe()(class AngelDisplay extends Component {
 
@@ -55,6 +55,8 @@ export default sizeMe()(class AngelDisplay extends Component {
     const { angels, selectedId } = this.state
     const { width, height } = this.props
 
+    console.table(angels)
+
     const columns = +(this.props.columns || Math.max(...angels.map(a => +a.w + +a.x - 1)) || 4)
     const rows = +(this.props.rows || Math.max(...angels.map(a => +a.h + +a.y - 1)) || 3)
 
@@ -64,14 +66,13 @@ export default sizeMe()(class AngelDisplay extends Component {
       
       const angel = Object.assign(ANGEL_TEMPLATE, angels.find(a => a._id === selectedId))
 
+      /* render fully expanded angel */
       return <AngelExpanded angel={angel} 
         height={`${rows * (height + HEIGHT_GAP) - HEIGHT_GAP}px`}
         exit={() => this.selectId(null)} />
     }
 
-    const calc = rows * (height + HEIGHT_GAP) - HEIGHT_GAP
-    console.table({ rows, height, HEIGHT_GAP, calc })
-
+    /* render grid */
     return (
         <div style={{
           display: 'grid',
@@ -86,7 +87,7 @@ export default sizeMe()(class AngelDisplay extends Component {
               angels
                 .filter(a => a._id !== selectedId)
                 .map(a => (
-			            <Transition key={`angel-${a._id}`} timeout={{exit: 500}} unmountOnExit>
+			            <Transition key={`angel-element-${a._id}`} timeout={{exit: 500}} unmountOnExit>
                     {state => 
                       <AngelElement transitionState={state}
                         onSelected={() => this.selectId(a._id)}

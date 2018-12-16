@@ -106,6 +106,7 @@ body {
 .angel-list {
   background: #DDD;
   grid-area: side;
+  overflow-y: auto;
 }
 
 .angel-list-item {
