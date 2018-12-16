@@ -1,13 +1,13 @@
 import React from 'react'
 import { Form, Text, TextArea } from 'informed'
 
-export default props => (
-  <div style={{ backgroundColor: props.color }}>
+export default ({ _id, onValueChange, onSubmit, ...angel }) => (
+  <div style={{ backgroundColor: angel.color }}>
     <Form
-      key={props._id}
-      initialValues={props}
-      onValueChange={formState => console.log('edited', formState)}
-      onSubmit={formState => console.log('submitted', formState)}>
+      key={`form-${_id}`}
+      initialValues={angel}
+      onValueChange={onValueChange}
+      onSubmit={onSubmit}>
       <div className="edit-angel-form">
         <div className="angel-form-info">
           <label htmlFor="angel-name">Name:</label>

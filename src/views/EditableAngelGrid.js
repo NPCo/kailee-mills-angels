@@ -14,11 +14,30 @@ export default class EditAngelGrid extends Component {
     }
 
     this.focus = this.focus.bind(this)
+    this.editAngel = this.editAngel.bind(this)
   }
 
   focus(_id) {
     this.setState({
       focusId: _id
+    })
+  }
+
+  editAngel(values) {
+
+    const { angels, focusId } = this.state
+
+    console.log('values', values)
+    const index = angels.findIndex(a => a._id === focusId)
+    const newAngel = Object.assign(angels[index], values)
+    console.log('new angel:', newAngel)
+
+    this.setState({
+      angels: [
+        ...angels.slice(0, index),
+        newAngel,
+        ...angels.slice(index + 1)
+      ]
     })
   }
 
@@ -40,7 +59,10 @@ export default class EditAngelGrid extends Component {
         </div>
         { 
           !!focusId
-            ? <AngelEditForm {...angels.find(a => a._id === focusId)} />
+            ? <AngelEditForm 
+              onValueChange={this.editAngel}
+              onSubmit={formState => console.log('submitted', formState)}
+              {...angels.find(a => a._id === focusId)} />
             : <></>
         }
       </div>
