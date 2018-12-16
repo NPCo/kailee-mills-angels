@@ -1,4 +1,5 @@
 import React from 'react'
+import * as Markdown from 'react-markdown'
 
 export default ({ angel, height, exit }) => (
   <div style={{ backgroundColor: angel.color, height }} className="angel-expanded">
@@ -11,7 +12,7 @@ export default ({ angel, height, exit }) => (
       <div className="angel-exit clickable" onClick={exit}><div className="close icon"></div></div>
     </div>
     <div className="angel-bio fade-in">
-      {angel.bio.map((text, i) => <p key={i}>{text}</p>)}
+      <Markdown source={angel.bio} />
     </div>
   </div>
 )

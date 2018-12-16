@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Text, TextArea } from 'informed'
 
 export default ({ _id, onValueChange, onSubmit, ...angel }) => (
-  <div style={{ backgroundColor: angel.color }}>
+  <div style={{ backgroundColor: angel.color, gridArea: 'edit' }}>
     <Form
       key={`form-${_id}`}
       initialValues={angel}

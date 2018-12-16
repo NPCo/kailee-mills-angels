@@ -55,8 +55,8 @@ export default sizeMe()(class AngelDisplay extends Component {
     const { angels, selectedId } = this.state
     const { width, height } = this.props
 
-    const columns = this.props.columns || Math.max(...angels.map(a => a.w + a.x - 1)) || 4
-    const rows = this.props.rows || Math.max(...angels.map(a => a.h + a.y - 1)) || 3
+    const columns = +(this.props.columns || Math.max(...angels.map(a => +a.w + +a.x - 1)) || 4)
+    const rows = +(this.props.rows || Math.max(...angels.map(a => +a.h + +a.y - 1)) || 3)
 
     const WIDTH_GAP = (this.props.size.width - columns * width) / (columns - 1)
 
@@ -68,6 +68,9 @@ export default sizeMe()(class AngelDisplay extends Component {
         height={`${rows * (height + HEIGHT_GAP) - HEIGHT_GAP}px`}
         exit={() => this.selectId(null)} />
     }
+
+    const calc = rows * (height + HEIGHT_GAP) - HEIGHT_GAP
+    console.table({ rows, height, HEIGHT_GAP, calc })
 
     return (
         <div style={{

@@ -19,8 +19,8 @@ body {
 }
 
 .angel-expanded {
-  height: 100%;
   display: grid;
+  overflow: hidden;
   grid-column-gap: 10px;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: auto auto;
@@ -98,6 +98,11 @@ body {
     "edit side";
 }
 
+.edit-live-demo {
+  grid-area: demo;
+  overflow-y: scroll;
+}
+
 .angel-list {
   background: #DDD;
   grid-area: side;
@@ -111,9 +116,7 @@ body {
 }
 
 .edit-angel-form {
-  grid-area: edit;
   display: grid;
-  height: 100%;
   grid-template-columns: 2fr 3fr 2fr;
 }
 

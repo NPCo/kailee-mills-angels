@@ -29,7 +29,9 @@ export default class EditAngelGrid extends Component {
 
     console.log('values', values)
     const index = angels.findIndex(a => a._id === focusId)
-    const newAngel = Object.assign(angels[index], values)
+    const prevAngel = angels[index]
+    console.table({ values, prevAngel })
+    const newAngel = Object.assign(prevAngel, values)
     console.log('new angel:', newAngel)
 
     this.setState({
@@ -47,8 +49,8 @@ export default class EditAngelGrid extends Component {
 
     return (
       <div className="workspace-layout">
-        <div style={{ gridArea: 'demo' }}>
-          <AngelGrid width={250} height={150} angels={angels} />
+        <div className="edit-live-demo">
+            <AngelGrid width={250} height={150} angels={angels} />
         </div>
         <div className="angel-list">
           { 

@@ -75,10 +75,10 @@ export default class AngelElement extends Component {
 					transform: `scale(${this.state.hovered ? 1.1 : 1.0})`,
 					zIndex: this.state.zIndex,
 					gridArea: [
-						this.props.y,
-						this.props.x,
-						this.props.y + (this.props.h || 1),
-						this.props.x + (this.props.w || 1)
+						+this.props.y,
+						+this.props.x,
+						+this.props.y + (+this.props.h || 1),
+						+this.props.x + (+this.props.w || 1)
 					].join(' / '),
 					...transitionStyles[this.props.transitionState]
 			}}></div>
