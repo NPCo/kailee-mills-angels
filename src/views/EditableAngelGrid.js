@@ -17,22 +17,24 @@ export default class EditAngelGrid extends Component {
 
     this.state = {
       angels: [],
-      focusId: null
+      focusId: null,
+      isBusy: true
     }
 
     const { angels } = this.props
 
     if (typeof angels === 'function')
       angels()
-        .then(data => this.setState({ angels: data }))
+        .then(data => this.setState({ angels: data, isBusy: false }))
         .catch(err => console.error('Error getting angels -', err))
     else
-      this.state = Object.assign(this.state, { angels })
+      this.state = Object.assign(this.state, { angels, isBusy: false })
 
     this.focus = this.focus.bind(this)
     this.editAngel = this.editAngel.bind(this)
     this.newAngel = this.newAngel.bind(this)
     this.removeAngel = this.removeAngel.bind(this)
+    this.authenticateThen = this.authenticateThen.bind(this)
   }
 
   focus(_id) {
@@ -62,18 +64,16 @@ export default class EditAngelGrid extends Component {
     const { angels } = this.state
     const _id = uuid()
     const color = COLOR_LIST[angels.length % COLOR_LIST.length]
-    const columns = Math.max(...angels.map(a => +a.w + +a.x - 1))
-    const rows = Math.max(...angels.map(a => +a.h + +a.y - 1))
+    const columns = Math.max(...angels.map(a => +a.w + +a.x - 1), 1)
+    const rows = Math.max(...angels.map(a => +a.h + +a.y - 1), 1)
     
-    const slots = Array(columns * rows).fill(false)
+    const slots = Array(columns * rows || 1).fill(false)
     
     angels.forEach(a => {
       for (let x = a.x - 1; x < a.x + +a.w - 1; x++)
         for (let y = a.y - 1; y < a.y + +a.h - 1; y++)
-          console.table({x, y}) || (slots[x * rows + y] = true)
+          slots[x * rows + y] = true
     })
-
-    console.log(slots)
 
     const firstOpen = slots.findIndex(occupied => !occupied)
     const x = firstOpen !== -1 
@@ -102,9 +102,39 @@ export default class EditAngelGrid extends Component {
     })
   }
 
+  authenticateThen(action) {
+    return (function() {
+
+      const username = prompt('Database Username:', this.state.username || '')
+      const password = prompt('Database Password:', this.state.password || '')
+
+      this.setState({
+        username,
+        password,
+        isBusy: true
+      })
+
+      const body = JSON.stringify({
+        credentials: { username, password },
+        angels: this.state.angels.map(({ _id, ...data }) => data)
+      })
+
+      console.log(body)
+
+      action(body)
+        .then(data => data.json())
+        .then(data => console.log('successs', data))
+        .then(() => this.setState({ isBusy: false }))
+        .catch(err => console.log('error!', err))
+    }).bind(this)
+  }
+
   render() {
 
-    const { angels, focusId } = this.state
+    const { angels, focusId, isBusy } = this.state
+
+    const saveDraft = this.authenticateThen(this.props.saveDraft)
+    const publish = this.authenticateThen(this.props.publish)
 
     return (
       <div className="workspace-layout">
@@ -114,8 +144,8 @@ export default class EditAngelGrid extends Component {
         <div className="angel-list">
           <div className="angel-list-item">
             <button onClick={() => this.newAngel()}>New Angel</button>
-            <button onClick={() => console.log('save')}>Save Changes</button>
-            <button onClick={() => console.log('publish')}>Publish</button>
+            <button onClick={saveDraft} disabled={isBusy}>Save Changes</button>
+            <button onClick={publish} disabled={isBusy}>Publish</button>
           </div>
           { 
             angels.map(a =>

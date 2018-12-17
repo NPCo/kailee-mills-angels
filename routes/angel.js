@@ -16,12 +16,12 @@ const credentialSchema = Joi.object().keys({
 
 const validateThen = f => (req, res, next) => {
 
-  console.log(JSON.stringify(req.body, null, 2))
+  // console.log(JSON.stringify(req.body, null, 2))
 
   const { error } = Joi.validate(req.body.credentials, credentialSchema, { presence: 'required' })
   
   if (error)
-    return next({ status: 401, message: 'Incorrect credentials.' })
+    return res.status(401).json({ message: 'Incorrect credentials.' })
 
   const connection = process.env.DB_EDIT_CONNECTION
     .replace('<user>', req.body.credentials.username)
@@ -41,23 +41,19 @@ router.delete('/:id', validateThen(removeOne))
 function getAll(req, res, next) {
   readonlyDB.get(getCollection(req))
     .find({})
-    .then(items => res.status(200).send({ data: items }))
-    .catch(next)
+    .then(items => res.status(200).json({ data: items }))
+    .catch(err => res.status(500).json({ message: 'Could not get all items.' }))
 }
 
 function getOne(req, res, next) {
   readonlyDB.get(getCollection(req))
     .findOne({ id: req.params.id })
     .then(item => {
-      if (!item) return res.status(404).send({ message: 'Item not found.' })
-      res.status(200).send({ data: item })
+      if (!item) return res.status(404).json({ message: 'Item not found.' })
+      res.status(200).json({ data: item })
     })
-    .catch(next)
+    .catch(err => res.status(500).json({ message: 'Could not get item.' }))
 }
-
-// const dbErrorHandler = err => ({ 
-//   message: err.message.startsWith('not authorized') ? 'Unauthorized' : 'Something went wrong'
-// })
 
 const angelSchema = Joi.array().items(Joi.object().keys({
   x: Joi.number().integer().min(1).max(100),
@@ -69,19 +65,20 @@ const angelSchema = Joi.array().items(Joi.object().keys({
   color: Joi.string().regex(/#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/),
   thumbnail: Joi.string().regex(/((\w+:\/\/)[-a-zA-Z0-9:@;?&=/%+.*!'(),$_{}^~[\]`#|]+)/),
   photo: Joi.string().regex(/((\w+:\/\/)[-a-zA-Z0-9:@;?&=/%+.*!'(),$_{}^~[\]`#|]+)/),
-  bio: Joi.array().max(10).items(Joi.string().max(10000))
+  bio: Joi.string().max(100000)
 }))
 
 function create(req, res, next, db) {
 
   const { error } = Joi.validate(req.body.angels, angelSchema)
-
+  
   return error
-    ? next({ status: 400, message: 'Could not create new item.' })
+    ? res.status(500).json({ message: 'Could not create new items.' })
     : db.get(getCollection(req))
       .insert(req.body.angels)
+      .then(() => console.log('created items'))
       .then(() => res.status(201).json({ message: 'Success', data: req.body }))
-      .catch(next)
+      .catch(err => res.status(500).json({ message: 'Could not create new items.' }))
       .finally(() => db.close())
 }
 
@@ -95,8 +92,9 @@ function create(req, res, next, db) {
 function removeAll(req, res, next, db) {
   db.get(getCollection(req))
     .remove({})
+    .then(() => console.log('removed items'))
     .then(() => res.status(200).json({ message: 'Removed All' }))
-    .catch(next)
+    .catch(err => res.status(500).json({ message: 'Could not remove all items.' }))
     .finally(() => db.close())
 }
 
@@ -104,6 +102,6 @@ function removeOne(req, res, next, db) {
   db.get(getCollection(req))
     .findOneAndDelete({ _id: req.params.id })
     .then(() => res.status(200).json({ message: 'Removed' }))
-    .catch(next)
+    .catch(err => res.status(500).json({ message: 'Could not remove item.' }))
     .finally(() => db.close())
 }
