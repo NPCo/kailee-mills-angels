@@ -4,7 +4,7 @@ import AngelDisplay from './views/AngelDisplay.js'
 import EditableAngelGrid from './views/EditableAngelGrid.js'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-const angelEndpoint = `${process.env.NODE_ENV === 'development' && 'http://localhost:3000'}/api/angel`
+const angelEndpoint = '/api/endpoint'
 
 const angels = () => fetch(angelEndpoint)
   .then(res => res.json())
