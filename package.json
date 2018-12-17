@@ -24,7 +24,7 @@
   },
   "scripts": {
     "production": "react-scripts build && node index.js",
-    "start": "react-scripts start",
+    "start": "react-scripts build && node index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
