@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
+const path = require('path')
 const app = module.exports = express()
 const port = parseInt(process.env.PORT || 3000)
 require('dotenv').config()
@@ -14,13 +15,18 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan(process.env.NODE_ENV !== 'production' ? 'dev' : 'combined'))
 app.use(cors(process.env.NODE_ENV !== 'production' ? undefined : { origin: true, credentials: true }))
 
-app.use('/edit', express.static('./build'))
-app.use('/', express.static('./build'))
+// app.use('/edit', express.static('./build'))
+// app.use('/', express.static('./build'))
 
+app.use(express.static(path.join(__dirname, "client", "build")))
 app.use('/api/angel', require('./routes/angel'))
 
 app.use(notFound)
 app.use(errorHandler)
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+})
 
 function notFound(req, res, next) {
   res.status(404).send({ error: 'Not found!', status: 404, url: req.originalUrl })
@@ -34,4 +40,4 @@ function errorHandler(err, req, res, next) {
 
 app.listen(port)
   .on('error', console.error.bind(console))
-  .on('listening', console.log.bind(console, 'Listening on http://0.0.0.0:' + port))
+  .on('listening', console.log.bind(console, `Listening on http://0.0.0.0:${port}`))
