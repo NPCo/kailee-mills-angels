@@ -70,12 +70,12 @@ const angelSchema = Joi.array().items(Joi.object().keys({
 
 function create(req, res, next, db) {
 
-  const { error } = Joi.validate(req.body.angels, angelSchema)
+  const { val, error } = Joi.validate(req.body.angels, angelSchema)
   
   return error
     ? res.status(500).json({ message: 'Could not create new items.' })
     : db.get(getCollection(req))
-      .insert(req.body.angels)
+      .insert(val)
       .then(() => console.log('created items'))
       .then(() => res.status(201).json({ message: 'Success', data: req.body }))
       .catch(err => res.status(500).json({ message: 'Could not create new items.' }))

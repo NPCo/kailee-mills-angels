@@ -70,8 +70,8 @@ export default class EditAngelGrid extends Component {
     const slots = Array(columns * rows || 1).fill(false)
     
     angels.forEach(a => {
-      for (let x = a.x - 1; x < a.x + +a.w - 1; x++)
-        for (let y = a.y - 1; y < a.y + +a.h - 1; y++)
+      for (let x = +a.x - 1; x < +a.x + +a.w - 1; x++)
+        for (let y = +a.y - 1; y < +a.y + +a.h - 1; y++)
           slots[x * rows + y] = true
     })
 
@@ -154,12 +154,9 @@ export default class EditAngelGrid extends Component {
           }
         </div>
         { 
-          !!focusId
-            ? <AngelEditForm 
-              onValueChange={this.editAngel}
-              removeAngel={() => this.removeAngel(focusId)}
-              {...angels.find(a => a._id === focusId)} />
-            : <></>
+          !!focusId && <AngelEditForm onValueChange={this.editAngel} 
+            removeAngel={() => this.removeAngel(focusId)}
+            {...angels.find(a => a._id === focusId)} />
         }
       </div>
     )
