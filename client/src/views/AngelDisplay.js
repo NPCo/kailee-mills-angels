@@ -73,8 +73,8 @@ export default sizeMe()(class AngelDisplay extends Component {
     return (
         <div style={{
           display: 'grid',
-          gridTemplateColumns: `repeat(${columns || 4}, ${width || 100}px)`,
-          gridTemplateRows: `repeat(${rows || 3}, ${height || 100}px)`,
+          gridTemplateColumns: `repeat(${columns}, ${width || 100}px)`,
+          gridTemplateRows: `repeat(${rows}, ${height || 100}px)`,
           columnGap: `calc((100% - ${columns * width}px) / ${columns - 1})`,
           height: `${rows * (height + HEIGHT_GAP) - HEIGHT_GAP}px`,
           rowGap: `${HEIGHT_GAP}px`
