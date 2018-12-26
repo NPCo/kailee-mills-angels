@@ -18,12 +18,12 @@ app.use(cors(process.env.NODE_ENV !== 'production' ? undefined : { origin: true,
 app.use(express.static(path.join(__dirname, "client", "build")))
 app.use('/api/angel', require('./routes/angel'))
 
-app.use(notFound)
-app.use(errorHandler)
-
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 })
+
+app.use(notFound)
+app.use(errorHandler)
 
 function notFound(req, res, next) {
   res.status(404).send({ error: 'Not found!', status: 404, url: req.originalUrl })

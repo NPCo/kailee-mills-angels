@@ -119,8 +119,6 @@ export default class EditAngelGrid extends Component {
         angels: this.state.angels.map(({ _id, ...data }) => data)
       })
 
-      console.log(body)
-
       action(body)
         .then(data => data.json())
         .then(data => console.log('successs', data))

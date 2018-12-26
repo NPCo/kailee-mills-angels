@@ -70,7 +70,7 @@ export default class AngelElement extends Component {
 				onClick={this.select}
 				style={{
 					cursor: (this.enabled) ? 'pointer' : 'default',
-					background: `url(${this.props.thumbnail}) no-repeat 50% 50%`,
+					background: this.props.thumbnail && `url(${this.props.thumbnail}) no-repeat 50% 50%`,
 					backgroundColor: this.props.color,
 					transform: `scale(${this.state.hovered ? 1.1 : 1.0})`,
 					zIndex: this.state.zIndex,

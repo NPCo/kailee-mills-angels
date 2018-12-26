@@ -16,8 +16,6 @@ const credentialSchema = Joi.object().keys({
 
 const validateThen = f => (req, res, next) => {
 
-  // console.log(JSON.stringify(req.body, null, 2))
-
   const { error } = Joi.validate(req.body.credentials, credentialSchema, { presence: 'required' })
   
   if (error)
@@ -70,26 +68,21 @@ const angelSchema = Joi.array().items(Joi.object().keys({
 
 function create(req, res, next, db) {
 
-  const { val, error } = Joi.validate(req.body.angels, angelSchema)
+  const { error } = Joi.validate(req.body.angels, angelSchema)
   
   return error
     ? res.status(500).json({ message: 'Could not create new items.' })
     : db.get(getCollection(req))
-      .insert(val)
+      .insert(req.body.angels)
       .then(() => console.log('created items'))
       .then(() => res.status(201).json({ message: 'Success', data: req.body }))
       .catch(err => res.status(500).json({ message: 'Could not create new items.' }))
       .finally(() => db.close())
 }
 
-// function update(req, res, next, editableAngels) {
-//   const { id } = req.params
-//   editableAngels.findOneAndUpdate({ _id: id }, req.body)
-//     .then(() => res.status(200).json({ message: 'Success', data: req.body }))
-//     .catch(next)
-// }
-
 function removeAll(req, res, next, db) {
+  console.log('attempting removeAll!')
+  res.status(200).json({ message: 'Removed All' })
   db.get(getCollection(req))
     .remove({})
     .then(() => console.log('removed items'))
