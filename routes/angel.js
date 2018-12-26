@@ -30,23 +30,29 @@ const getAllAngels = (req, res, next) => {
     .catch(err => console.log(err) || res.status(500).json(err))
 }
 
+const getCredentials = (req, res, next) => {
+
+  const credentialSchema = Joi.object().keys({
+    username: Joi.string().alphanum().min(8).max(32).required(),
+    password: Joi.string().alphanum().min(8).max(32).required()
+  })
+
+  const { error } = Joi.validate(req.body.credentials, credentialSchema, { presence: 'required' })
+  
+  if (error) return res.status(401).json({ message: 'Incorrect credentials.' })
+
+  res.locals.credentials = req.body.credentials
+  next()
+}
+
 router.route('/')
   .all(getCollectionName)
   .get(getReadConnection, getAllAngels)
-  .post((req, res, next) => console.log('posting!') || next())
+  .post(getCredentials)
   .delete((req, res, next) => console.log('deleting!') || next())
 
-// const credentialSchema = Joi.object().keys({
-//   username: Joi.string().alphanum().min(8).max(32).required(),
-//   password: Joi.string().alphanum().min(8).max(32).required()
-// })
 
 // const validateThen = f => (req, res, next) => {
-
-//   const { error } = Joi.validate(req.body.credentials, credentialSchema, { presence: 'required' })
-  
-//   if (error)
-//     return res.status(401).json({ message: 'Incorrect credentials.' })
 
 //   const connection = process.env.DB_EDIT_CONNECTION
 //     .replace('<user>', req.body.credentials.username)
