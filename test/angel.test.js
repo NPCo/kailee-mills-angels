@@ -35,13 +35,18 @@ describe('app', () => {
     })
     specify('POST requires credentials', done => {
       request(app).post('/api/angel')
-        .send({ credentials: { user: '', pass: '' } })
+        .send({ credentials: { username: '', password: '' } })
+        .expect(401, done)
+    })
+    specify('POST rejects incorrect credentials', done => {
+      request(app).post('/api/angel')
+        .send({ credentials: { username: '12345678a', password: '12345678a' } })
         .expect(401, done)
     })
     specify('POST authenticates', done => {
       request(app).post('/api/angel')
-        .send({ credentials: { user: '', pass: '' } })
-        .expect(401, done)
+        .send({ credentials: { username: process.env.DB_EXAMPLE_USER, password: process.env.DB_EXAMPLE_PASS } })
+        .expect(404, done)
     })
   })
 

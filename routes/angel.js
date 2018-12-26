@@ -18,7 +18,7 @@ const readonlyDB = monk(process.env.DB_READ_CONNECTION)
 const getReadConnection = (req, res, next) => {
 
   res.locals.db = readonlyDB
-  res.locals.collection = readonlyDB.get(res.locals.collectionName)
+  res.locals.collection = res.locals.db.get(res.locals.collectionName)
 
   next()
 }
@@ -45,21 +45,24 @@ const getCredentials = (req, res, next) => {
   next()
 }
 
+const authenticateAndConnect = (req, res, next) => {
+
+  const connectionURL = process.env.DB_EDIT_CONNECTION
+    .replace('<user>', res.locals.credentials.username)
+    .replace('<pass>', res.locals.credentials.password)
+
+  monk(connectionURL)
+    .then(db => { res.locals.db = db })
+    .then(() => { res.locals.collection = res.locals.db.get(res.locals.collectionName) })
+    .then(() => next())
+    .catch(err => res.status(401).json({ message: 'Incorrect credentials.' }))
+}
+
 router.route('/')
   .all(getCollectionName)
   .get(getReadConnection, getAllAngels)
-  .post(getCredentials)
+  .post(getCredentials, authenticateAndConnect)
   .delete((req, res, next) => console.log('deleting!') || next())
-
-
-// const validateThen = f => (req, res, next) => {
-
-//   const connection = process.env.DB_EDIT_CONNECTION
-//     .replace('<user>', req.body.credentials.username)
-//     .replace('<pass>', req.body.credentials.password)
-
-//   return f(req, res, next, monk(connection))
-// }
 
 
 // const angelSchema = Joi.array().items(Joi.object().keys({
