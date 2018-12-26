@@ -35,6 +35,6 @@ function errorHandler(err, req, res, next) {
   res.status(500).send({ error: err.message, stack, url: req.originalUrl })
 }
 
-app.listen(port)
+module.exports = app.listen(port)
   .on('error', console.error.bind(console))
   .on('listening', console.log.bind(console, `Listening on http://0.0.0.0:${port}`))
