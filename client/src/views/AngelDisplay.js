@@ -10,6 +10,13 @@ import AngelExpanded from '../components/AngelExpanded.js'
 const HEIGHT_GAP = 10
 const ANGEL_TEMPLATE = { color: 'white', photo: '#', name: '...', dates: '', bio: [] }
 const assignId = a => a.hasOwnProperty('_id') ? a : Object.assign(a, { _id: uuid() })
+const parseNums = ({ x, y, w, h, ...data }) => ({ 
+  x: parseInt(x),
+  y: parseInt(y),
+  w: parseInt(w),
+  h: parseInt(h),
+  ...data
+})
 
 export default sizeMe()(class AngelDisplay extends Component {
 
@@ -26,11 +33,11 @@ export default sizeMe()(class AngelDisplay extends Component {
 
     if (typeof angels === 'function')
       angels()
-        .then(data => data.map(assignId))
+        .then(data => data.map(assignId).map(parseNums))
         .then(data => this.setState({ angels: data }))
         .catch(err => console.error('Error getting angels -', err))
     else
-      this.state = Object.assign(this.state, { angels: angels.map(assignId) })
+      this.state = Object.assign(this.state, { angels: angels.map(assignId).map(parseNums) })
 
     this.selectId = this.selectId.bind(this)
     this.trigger = this.trigger.bind(this)
