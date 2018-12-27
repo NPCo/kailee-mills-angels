@@ -24,29 +24,52 @@ describe('app', () => {
   })
 
   describe('api/angel', () => {
-    specify('GET returns angels', done => {
-      request(app).get('/api/angel')
-        .expect(200)
-        .expect({ data: [] }, done)
+    describe('GET', () => {
+      it('returns angels', done => {
+        request(app).get('/api/angel')
+          .expect(200)
+          .expect({ data: [] }, done)
+      })
     })
-    specify('POST requires credentials', done => {
-      request(app).post('/api/angel')
-        .expect(401, done)
+    describe('DELETE', () => {
+      it('requires credentials', done => {
+        request(app).delete('/api/angel')
+          .expect(401, done)
+      })
+      it('requires credentials', done => {
+        request(app).delete('/api/angel')
+          .send({ credentials: { username: '', password: '' } })
+          .expect(401, done)
+      })
+      it('rejects incorrect credentials', done => {
+        request(app).delete('/api/angel')
+          .send({ credentials: { username: '12345678a', password: '12345678a' } })
+          .expect(401, done)
+      })
     })
-    specify('POST requires credentials', done => {
-      request(app).post('/api/angel')
-        .send({ credentials: { username: '', password: '' } })
-        .expect(401, done)
-    })
-    specify('POST rejects incorrect credentials', done => {
-      request(app).post('/api/angel')
-        .send({ credentials: { username: '12345678a', password: '12345678a' } })
-        .expect(401, done)
-    })
-    specify('POST authenticates', done => {
-      request(app).post('/api/angel')
-        .send({ credentials: { username: process.env.DB_EXAMPLE_USER, password: process.env.DB_EXAMPLE_PASS } })
-        .expect(404, done)
+    describe('POST', () => {
+      const angels = [ { x: 1, y: 1, w: 1, h: 1 } ]
+      it('requires valid angels', done => {
+        request(app).post('/api/angel')
+          .send({ angels: [ {} ] })
+          .expect(/ValidationError/)
+          .expect(400, done)
+      })
+      it('requires valid angels and requires credentials', done => {
+        request(app).post('/api/angel')
+          .send({ angels })
+          .expect(401, done)
+      })
+      it('requires credentials', done => {
+        request(app).post('/api/angel')
+          .send({ credentials: { username: '', password: '' } })
+          .expect(401, done)
+      })
+      it('rejects incorrect credentials', done => {
+        request(app).post('/api/angel')
+          .send({ credentials: { username: '12345678a', password: '12345678a' } })
+          .expect(401, done)
+      })
     })
   })
 
