@@ -34,16 +34,19 @@ describe('app', () => {
     describe('DELETE', () => {
       it('requires credentials', done => {
         request(app).delete('/api/angel')
+          .expect(/Credentials required/)
           .expect(401, done)
       })
       it('requires credentials', done => {
         request(app).delete('/api/angel')
           .send({ credentials: { username: '', password: '' } })
+          .expect(/Credentials required/)
           .expect(401, done)
       })
       it('rejects incorrect credentials', done => {
         request(app).delete('/api/angel')
           .send({ credentials: { username: '12345678a', password: '12345678a' } })
+          .expect(/Invalid Credentials/)
           .expect(401, done)
       })
     })
@@ -52,22 +55,25 @@ describe('app', () => {
       it('requires valid angels', done => {
         request(app).post('/api/angel')
           .send({ angels: [ {} ] })
-          .expect(/ValidationError/)
+          .expect(/Invalid angels/)
           .expect(400, done)
       })
       it('requires valid angels and requires credentials', done => {
         request(app).post('/api/angel')
           .send({ angels })
+          .expect(/Credentials required/)
           .expect(401, done)
       })
       it('requires credentials', done => {
         request(app).post('/api/angel')
           .send({ credentials: { username: '', password: '' } })
+          .expect(/Credentials required/)
           .expect(401, done)
       })
       it('rejects incorrect credentials', done => {
         request(app).post('/api/angel')
           .send({ credentials: { username: '12345678a', password: '12345678a' } })
+          .expect(/Invalid Credentials/)
           .expect(401, done)
       })
     })
