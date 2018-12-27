@@ -29,7 +29,7 @@ const headers = {
 
 const publish = body => fetch(angelEndpoint, { method: 'DELETE', headers, body })
   .then(() => fetch(angelEndpoint, { method: 'POST', headers, body }))
-  .then(() => saveDraft())
+  .then(() => saveDraft(body))
 
 const saveDraft = body => fetch(`${angelEndpoint}?isDraft=true`, { method: 'DELETE', headers, body })
   .then(() => fetch(`${angelEndpoint}?isDraft=true`, { method: 'POST', headers, body }))

@@ -121,9 +121,9 @@ export default class EditAngelGrid extends Component {
 
       action(body)
         .then(data => data.json())
-        .then(data => console.log('successs', data))
+        .then(({ error }) => error && alert(`Error: ${error}`))
         .then(() => this.setState({ isBusy: false }))
-        .catch(err => console.log('error!', err))
+        .catch(err => alert('Error connecting to angels api'))
     }).bind(this)
   }
 
