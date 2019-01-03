@@ -77,6 +77,8 @@ const verifyAngels = (req, res, next) => {
       color: Joi.string().regex(/#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/),
       thumbnail: Joi.string().regex(/((\w+:\/\/)[-a-zA-Z0-9:@;?&=/%+.*!'(),$_{}^~[\]`#|]+)/),
       photo: Joi.string().regex(/((\w+:\/\/)[-a-zA-Z0-9:@;?&=/%+.*!'(),$_{}^~[\]`#|]+)/),
+      thumbnailFit: Joi.string().max(100),
+      photoFit: Joi.string().max(100),
       bio: Joi.string().max(10000)
     })
   )

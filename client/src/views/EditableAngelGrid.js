@@ -152,9 +152,10 @@ export default class EditAngelGrid extends Component {
           }
         </div>
         { 
-          !!focusId && <AngelEditForm onValueChange={this.editAngel} 
+          !!focusId && <AngelEditForm key={focusId}
+            onValueChange={this.editAngel} 
             removeAngel={() => this.removeAngel(focusId)}
-            {...angels.find(a => a._id === focusId)} />
+            angel={angels.find(a => a._id === focusId)} />
         }
       </div>
     )

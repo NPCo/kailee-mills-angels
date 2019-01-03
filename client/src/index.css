@@ -118,20 +118,23 @@ body {
 
 .edit-angel-form {
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr;
+  grid-template-columns: 1fr;
+  height: 300px;
 }
 
 .angel-form-info {
   display: grid;
   padding: 20px;
-  grid-row-gap: 1em;
-  grid-template-columns: 1fr 2fr;
+  grid-gap: 1em;
+  grid-template-columns: 1fr 2fr 1fr 2fr;
 }
 
 .angel-form-bio {
-  grid-column: 2 / 3;
   display: grid;
-  grid-template-rows: 30px auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr auto;
 }
 
 .clickable {

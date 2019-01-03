@@ -1,49 +1,58 @@
-import React from 'react'
-import { Form, Text, TextArea } from 'informed'
+import React, { Component } from 'react'
 
-export default ({ _id, onValueChange, removeAngel, ...angel }) => (
-  <div style={{ backgroundColor: angel.color, gridArea: 'edit' }}>
-    <Form
-      key={`form-${_id}`}
-      initialValues={angel}
-      onValueChange={onValueChange}>
-      <div className="edit-angel-form">
-        <div className="angel-form-info">
-          <label htmlFor="angel-name">Name:</label>
-          <Text field="name" id="angel-name" />
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
-          <label htmlFor="angel-dates">Dates:</label>
-          <Text field="dates" id="angel-dates" placeholder="e.g. 2000 - 2000" />
+import AngelFormInfo from './AngelFormInfo'
+import AngelFormBio from './AngelFormBio'
+import AngelFormPosition from './AngelFormPosition';
 
-          <label htmlFor="angel-color">Color:</label>
-          <Text field="color" id="angel-color" placeholder="e.g. #d7f5e1" />
+export default class AngelEditForm extends Component {
 
-          <label htmlFor="angel-photo">Biography Photo:</label>
-          <Text field="photo" id="angel-photo" placeholder="e.g. https://static.wixstatic.com/media/img.jpg" />
+  constructor(props) {
+    super(props)
 
-          <label htmlFor="angel-thumbnail">Thumbnail Photo:</label>
-          <Text field="thumbnail" id="angel-thumbnail" placeholder="e.g. https://static.wixstatic.com/media/img.jpg" />
+    this.state = {
+      x: 1,
+      y: 1,
+      w: 1,
+      h: 1,
+      ...props.angel
+    }
+
+    this.onEdit = this.onEdit.bind(this)
+  }
+
+  onEdit(angel) {
+    this.props.onValueChange(angel)
+    this.setState(angel)
+  }
+
+  render() {
+    const { removeAngel } = this.props
+    const { ...angel } = this.state
+    return (
+      <div style={{ backgroundColor: angel.color, gridArea: 'edit' }}>
+        <div className="edit-angel-form">
+          <Tabs>
+            <TabList>
+              <Tab>Information</Tab>
+              <Tab>Biography</Tab>
+              <Tab>Position</Tab>
+            </TabList>
+
+            <TabPanel>
+              <AngelFormInfo onValueChange={this.onEdit} { ...angel } />
+            </TabPanel>
+            <TabPanel>
+              <AngelFormBio onValueChange={this.onEdit} { ...angel } />
+            </TabPanel>
+            <TabPanel>
+              <AngelFormPosition onValueChange={this.onEdit} removeAngel={removeAngel} { ...angel } />
+            </TabPanel>
+          </Tabs>
         </div>
-        <div className="angel-form-bio">
-          <label htmlFor="angel-bio">Biography:</label>
-          <TextArea field="bio" id="angel-bio" />
-        </div>
-        <div className="angel-form-info">
-          <label htmlFor="angel-col">Column:</label>
-          <Text field="x" id="angel-col" />
-
-          <label htmlFor="angel-row">Row:</label>
-          <Text field="y" id="angel-row" />
-
-          <label htmlFor="angel-width">Width:</label>
-          <Text field="w" id="angel-width" />
-
-          <label htmlFor="angel-height">Height:</label>
-          <Text field="h" id="angel-height" />
-
-          <button onClick={removeAngel} style={{ gridColumn: '1 / 3' }}>Delete</button>
-        </div>
-      </div>
-    </Form>
-  </div>
-)
+    </div>
+    )
+  }
+}

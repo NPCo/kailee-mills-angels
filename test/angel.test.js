@@ -28,7 +28,7 @@ describe('app', () => {
       it('returns angels', done => {
         request(app).get('/api/angel')
           .expect(200)
-          .expect({ data: [] }, done)
+          .expect('Content-Type', /json/, done)
       })
     })
     describe('DELETE', () => {

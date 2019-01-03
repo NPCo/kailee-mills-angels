@@ -71,6 +71,7 @@ export default class AngelElement extends Component {
 				style={{
 					cursor: (this.enabled) ? 'pointer' : 'default',
 					background: this.props.thumbnail && `url(${this.props.thumbnail}) no-repeat 50% 50%`,
+					backgroundSize: this.props.thumbnailFit || 'auto',
 					backgroundColor: this.props.color,
 					transform: `scale(${this.state.hovered ? 1.1 : 1.0})`,
 					zIndex: this.state.zIndex,

@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "cd client && npm run build && cd .. && node index.js",
-    "test-dev": "mocha --watch --reporter min",
+    "test": "mocha --watch --reporter min",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "devDependencies": {
